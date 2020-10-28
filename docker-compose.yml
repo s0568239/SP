@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+    backend:
+        build:
+            context: ./Backend
+            dockerfile: Dockerfile
+        image: htw-spezprog-backend
+        container_name: htw-spezprog-backend_c
+        networks:
+            - ahp-spezprog-network
+        
+        
+    
+    webapp:
+        build:
+            context: ./Webapp
+            dockerfile: Dockerfile
+        image: htw-spezprog-webapp
+        volumes:
+            - ./Webapp/src:/usr/share/nginx/html
+        ports:
+            - 81:80
+        container_name: htw-spezprog-webapp_c
+        networks:
+            - ahp-spezprog-network
+        
+networks:
+    ahp-spezprog-network:
+        

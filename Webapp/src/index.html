@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<div style="text-align: center;">
+		<h1>Select Info to fetch and show</h1>
+		<button id="getCars" type="submit" onclick = "constructTable('#table', this.id)">Fetch Cars Info</button>
+		<br><br>
+		<button id="getUsers" type="submit" onclick = "constructTable('#table2', this.id)">Fetch Users Info</button>
+		</div>
+		<br><br>
+		<table align = "center"
+            id="table" border="1"> 
+		</table> 
+		<br><br><br><br>
+		<table align = "center"
+            id="table2" border="1"> 
+		</table>
+		<script>
+		//https://www.geeksforgeeks.org/how-to-convert-json-data-to-a-html-table-using-javascript-jquery/
+			function httpGet(theUrl){
+				alert('ask ' + theUrl);
+				var xmlHttp = new XMLHttpRequest();
+				xmlHttp.open("GET", theUrl, false);
+				xmlHttp.send(null);
+				var dataJson = JSON.parse(xmlHttp.responseText);
+				return dataJson;
+				}
+				
+			function constructTable(selector, id) {
+				var url;
+				if(id == "getCars"){
+					url = "/api/all_cars"
+				}
+				if(id == "getUsers"){
+					url = "/api/customers"
+				}
+				var list = httpGet(url);
+				// Getting the all column names 
+				var cols = Headers(list, selector);   
+				
+				// Traversing the JSON data 
+				for (var i = 0; i < list.length; i++) { 
+					var row = $('<tr/>');    
+					for (var colIndex = 0; colIndex < cols.length; colIndex++){ 
+						var val = list[i][cols[colIndex]]; 
+                      
+						// If there is any key, which is matching 
+						// with the column name 
+						if (val == null) val = "";   
+							row.append($('<td/>').html(val)); 
+						} 
+					// Adding each row to the table 
+					$(selector).append(row); 
+					} 
+				}
+				
+			
+			function Headers(list, selector) { 
+				var columns = []; 
+				var header = $('<tr/>'); 
+              
+				for (var i = 0; i < list.length; i++) { 
+					var row = list[i]; 
+					//alert(row);
+					for (var k in row) { 
+						if ($.inArray(k, columns) == -1) { 
+							columns.push(k); 
+                          
+							// Creating the header 
+							header.append($('<th/>').html(k)); 
+							} 
+						} 
+					}
+				// Appending the header to the table 
+				$(selector).append(header); 
+					return columns; 
+				} 
+			
+		</script>
+	</body>
+</html>
