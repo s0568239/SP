@@ -3,7 +3,9 @@ from flask import Flask, jsonify, request
 from Car_bookings import Car_bookings
 from Cars import Cars
 from Customer_manager import Customer_manager
+from DB_DAO import DB_DAO
 import json
+
 
 # Test-data aus den json-Files laden
 cars_manager = Cars()
@@ -53,5 +55,35 @@ def create_booking():
 def create_unbooking():
     car_id = request.args.get('car_id')
     return booking_manager.unbook(car_id), 201
+    
+#Starting working with MongoDB
+datanbase_manager = DB_DAO()
 
+#Importing Customers Data
+if len(datanbase_manager.getCustomers()) == 0:
+    datanbase_manager.import_Data("customers", customer_data)
+
+#Importing Carss Data
+if len(datanbase_manager.getCars()) == 0:
+    datanbase_manager.import_Data("cars", car_data)
+
+#Router hinzufügen
+@app.route('/cars')
+def cars_get():
+    return datanbase_manager.getCars()
+
+#Router hinzufügen
+@app.route('/users')
+def users_get():
+    return datanbase_manager.getCustomers()
+
+#Router hinzufügen
+@app.route('/reservation', methods=['POST'])
+def reservation_get():
+    customer_id = request.args.get('customer_id')
+    car_id = request.args.get('car_id')
+    begin = request.args.get('begin')
+    end = request.args.get('end')
+    return datanbase_manager.insertOnlyOneData("bookings",{"customer_id": customer_id, "car_id":car_id, "begin":begin, "end":end})
+    
 app.run(host='0.0.0.0', port=4000)

@@ -24,6 +24,19 @@ services:
         container_name: htw-spezprog-webapp_c
         networks:
             - ahp-spezprog-network
+            
+    
+    database:
+        build:
+            context: ./Database
+            dockerfile: Dockerfile-DB
+        image: htw-spezprog-database
+        container_name: htw-spezprog-database_c
+        volumes:
+            - ./Database/data/db:/data/db
+            
+        networks:
+            - ahp-spezprog-network
         
 networks:
     ahp-spezprog-network:

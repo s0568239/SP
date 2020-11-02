@@ -23,7 +23,6 @@
 		<script>
 		//https://www.geeksforgeeks.org/how-to-convert-json-data-to-a-html-table-using-javascript-jquery/
 			function httpGet(theUrl){
-				alert('ask ' + theUrl);
 				var xmlHttp = new XMLHttpRequest();
 				xmlHttp.open("GET", theUrl, false);
 				xmlHttp.send(null);
@@ -34,10 +33,10 @@
 			function constructTable(selector, id) {
 				var url;
 				if(id == "getCars"){
-					url = "/api/all_cars"
+					url = "/api/cars"
 				}
 				if(id == "getUsers"){
-					url = "/api/customers"
+					url = "/api/users"
 				}
 				var list = httpGet(url);
 				// Getting the all column names 
