@@ -1,16 +1,21 @@
 from dbconfig import DBConfig
+from bson.json_util import dumps
 
 class DB_DAO:
-    db = None
+    #db = None
 
     def __init__(self):
        self.db = DBConfig()
 
     def getCars(self):
-       return self.db.getFind("cars")
+       documents = self.db.getFind("cars")
+       json_data = dumps(documents)
+       return json_data
 
     def getCustomers(self):
-       return self.db.getFind("customers")
+       documents = self.db.getFind("customers")
+       json_data = dumps(documents)
+       return json_data
 
     def getBookings(self):
        return self.db.getFind("bookings")

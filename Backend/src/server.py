@@ -60,12 +60,10 @@ def create_unbooking():
 datanbase_manager = DB_DAO()
 
 #Importing Customers Data
-if len(datanbase_manager.getCustomers()) == 0:
-    datanbase_manager.import_Data("customers", customer_data)
+datanbase_manager.import_Data("customers", customer_data)
 
 #Importing Carss Data
-if len(datanbase_manager.getCars()) == 0:
-    datanbase_manager.import_Data("cars", car_data)
+datanbase_manager.import_Data("cars", car_data)
 
 #Router hinzufügen
 @app.route('/cars')

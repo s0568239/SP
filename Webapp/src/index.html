@@ -30,7 +30,7 @@
 				return dataJson;
 				}
 				
-			function constructTable(selector, id) {
+			async function constructTable(selector, id) {
 				var url;
 				if(id == "getCars"){
 					url = "/api/cars"
@@ -38,7 +38,7 @@
 				if(id == "getUsers"){
 					url = "/api/users"
 				}
-				var list = httpGet(url);
+				var list = await httpGet(url);
 				// Getting the all column names 
 				var cols = Headers(list, selector);   
 				
