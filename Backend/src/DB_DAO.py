@@ -21,7 +21,21 @@ class DB_DAO:
        return self.db.getFind("bookings")
 
     def import_Data(self, collection,json_data):
-       return self.db.insertManyData(collection, json_data)
+      
+       if self.db.getFind(collection).count() == 0:
+          self.db.insertManyData(collection, json_data)
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+          print("Daten wurden importiert")
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+       else:
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+          print("Daten existieren bereit. Import wurde Übersprungen.")
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+      
 
     def insert_data(self, collection,json_data):
        return self.db.insertOnlyOneData(collection, json_data)
