@@ -33,10 +33,10 @@
 			async function constructTable(selector, id) {
 				var url;
 				if(id == "getCars"){
-					url = "/api/cars"
+					url = "/api/all_cars"
 				}
 				if(id == "getUsers"){
-					url = "/api/users"
+					url = "/api/customers"
 				}
 				var list = await httpGet(url);
 				// Getting the all column names 

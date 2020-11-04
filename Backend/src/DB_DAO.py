@@ -1,41 +1,37 @@
+# Import the python libraries
 from dbconfig import DBConfig
 from bson.json_util import dumps
 
 class DB_DAO:
-    #db = None
 
-    def __init__(self):
-       self.db = DBConfig()
+   # configuration of the database
+   def __init__(self):
+      self.db = DBConfig()
 
-    def getCars(self):
-       documents = self.db.getFind("cars")
-       json_data = dumps(documents)
-       return json_data
+   # get the collection of cars as JSON
+   def get_cars(self):
+      documents = self.db.find_collection("cars")
+      json_data = dumps(documents)
+      return json_data
 
-    def getCustomers(self):
-       documents = self.db.getFind("customers")
-       json_data = dumps(documents)
-       return json_data
+   # get the collection of customers as JSON
+   def get_customers(self):
+      documents = self.db.find_collection("customers")
+      json_data = dumps(documents)
+      return json_data
 
-    def getBookings(self):
-       return self.db.getFind("bookings")
+   # get the collection of bookings as JSON
+   def get_bookings(self):
+      return self.db.find_collection("bookings")
 
-    def import_Data(self, collection,json_data):
-      
-       if self.db.getFind(collection).count() == 0:
-          self.db.insertManyData(collection, json_data)
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          print("Daten wurden importiert")
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-       else:
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          print("Daten existieren bereit. Import wurde Übersprungen.")
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-          print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-      
+   # import multiple documents into a specific collection
+   def import_data(self, collection,json_data):
+      if self.db.find_collection(collection).count() == 0:
+         self.db.insert_many_data(collection, json_data)
+         print("Data has been imported")
+      else:
+         print("Data already existing. Import has been canceled.")
 
-    def insert_data(self, collection,json_data):
-       return self.db.insertOnlyOneData(collection, json_data)
+   # import one document into a specific collection
+   def insert_data(self, collection,json_data):
+      return self.db.insert_only_one_data(collection, json_data)
